@@ -18,8 +18,9 @@ def get_move():
 if __name__ == "__main__":
     size = get_size()
     board = get_board(size)
-
+    
     puzzle = Puzzle(board, size)
+    puzzle.scramble()
     move = get_move()
 
     while move != "q":

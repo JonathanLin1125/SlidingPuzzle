@@ -1,3 +1,7 @@
+"Jonathan Lin
+"
+import random
+
 class Puzzle:
     BOARD_SIZE = 4
 
@@ -33,6 +37,13 @@ class Puzzle:
             for col in row:
                 if col == "B":
                     return (self.board.index(row), row.index(col))
+
+    def scramble(self):
+        random.shuffle(self.board)
+        for i in range(len(self.board)):
+            random.shuffle(self.board[i])
+        self.blank_cord = self.find_blank()
+    
 
     def print_board(self):
         for row in self.board:
