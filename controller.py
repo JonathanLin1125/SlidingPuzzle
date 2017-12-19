@@ -20,9 +20,6 @@ if __name__ == "__main__":
     board = get_board(size)
     
     puzzle = Puzzle(board, size)
-    print(puzzle._check_solvable()) #Test if solvable
-    puzzle.scramble()
-    puzzle.print_board()
     move = get_move()
 
     while move != "q":
