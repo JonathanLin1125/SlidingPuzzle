@@ -8,6 +8,8 @@ DEFAULT = 4
 
 class Welcome:
     def __init__(self):
+        self.start = False
+        self.size = DEFAULT
         self.root_window = tkinter.Tk()
         self.root_window.resizable(width = False, height = False)
         self.root_window.wm_title("Sliding Puzzle Menu")
@@ -21,8 +23,8 @@ class Welcome:
         size_label = tkinter.Label(self.root_window, text = "Board Size", font = ("Helvetica", 10))
         size_label.grid(row = 1, column = 1)
 
-    def _size_selected():
-        pass
+    def _size_selected(self, event:tkinter.Event):
+        self.size = self.var.get()
 
     def _add_size_menu(self):
         self.var = tkinter.IntVar()
@@ -30,15 +32,17 @@ class Welcome:
         size_menu = tkinter.OptionMenu(self.root_window, self.var, 3,4,5,6,7,8,9,10,11,12, command = self._size_selected)
         size_menu.grid(row = 2, column = 1)
 
-    def _start():
-        pass
+    def _start(self):
+        self.start = True
+        self.root_window.destroy()
 
     def _add_start(self):
         start_button = tkinter.Button(self.root_window, text = "Start", command = self._start)
         start_button.grid(row = 3, column = 0)
 
-    def _quit():
-        pass
+    def _quit(self):
+        self.start = False
+        self.root_window.destroy()
 
     def _add_quit(self):
         quit_button = tkinter.Button(self.root_window, text = "Quit", command = self._quit)
