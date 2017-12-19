@@ -2,12 +2,19 @@ import random
 from functools import reduce
 
 class Puzzle:
-    BOARD_SIZE = 4
 
-    def __init__(self, start_board, size = BOARD_SIZE):
-        self.board = start_board
+    def __init__(self, size, start_board = []):
         self.size = size
+        self.board = start_board
+        if self.board == []:
+            self.create_default()
         self.blank_cord = self.find_blank()
+
+    def create_default(self):
+        for mult in range(1, self.size + 1):
+            self.board.append([num for num in range((mult - 1) * self.size + 1, mult * self.size + 1)])
+        del self.board[self.size - 1][self.size - 1]
+        self.board[self.size - 1].append("B")
 
     def update_board(self, key):
         if key == "w":
@@ -67,13 +74,11 @@ class Puzzle:
             return True
         else:
             return False
-        
-    
 
     def print_board(self):
         for row in self.board:
             for col in row:
-                print(col + " ", end="")
+                print(str(col) + " ", end="")
             print()
 
                 
