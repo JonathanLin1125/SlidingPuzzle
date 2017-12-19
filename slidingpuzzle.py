@@ -1,6 +1,5 @@
-"Jonathan Lin
-"
 import random
+from functools import reduce
 
 class Puzzle:
     BOARD_SIZE = 4
@@ -43,6 +42,32 @@ class Puzzle:
         for i in range(len(self.board)):
             random.shuffle(self.board[i])
         self.blank_cord = self.find_blank()
+        self._get_inversion_count()
+        
+        if self._check_solvable() == False:
+            self.scramble()
+
+    def _get_inversion_count(self):
+        inv_count = 0
+        single_list = reduce((lambda x,y: x + y), self.board)
+        for i in range(self.size * self.size - 1):
+            for j in range(i + 1, self.size * self.size):
+                if single_list[i] != "B" and single_list[j] != "B" and int(single_list[i]) > int(single_list[j]):
+                    inv_count += 1
+        return inv_count
+            
+
+    def _check_solvable(self):
+        inv_count = self._get_inversion_count()
+        if self.size % 2 != 0 and inv_count % 2 == 0:
+            return True
+        elif self.size % 2 == 0 and (self.size - self.blank_cord[0] + 1) % 2 != 0 and inv_count % 2 != 0:
+            return True
+        elif self.size % 2 == 0 and (self.size - self.blank_cord[0] + 1) % 2 == 0 and inv_count % 2 == 0:
+            return True
+        else:
+            return False
+        
     
 
     def print_board(self):
