@@ -38,7 +38,7 @@ class Welcome:
 
     def _add_start(self):
         start_button = tkinter.Button(self.root_window, text = "Start", command = self._start)
-        start_button.grid(row = 3, column = 0)
+        start_button.grid(row = 3, column = 2)
 
     def _quit(self):
         self.start = False
@@ -46,7 +46,7 @@ class Welcome:
 
     def _add_quit(self):
         quit_button = tkinter.Button(self.root_window, text = "Quit", command = self._quit)
-        quit_button.grid(row = 3, column = 2)
+        quit_button.grid(row = 3, column = 0)
     
     def _add_widgets(self):
         self._add_title()
