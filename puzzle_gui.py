@@ -15,6 +15,7 @@ class Game:
         self.root_window.columnconfigure(0, weight = 0)
         self._add_widgets()
         self.display_board()
+        self._get_move()
 
     def display_board(self):
         self.board = tkinter.Canvas(master = self.root_window, width = self.side, height = self.side, background = "ivory3")
@@ -28,8 +29,7 @@ class Game:
             for y in range(self.size):
                 center = (self.list_coord[x][y][0] - self.side/self.size/2, self.list_coord[x][y][1] - self.side/self.size/2)
                 if self.puzzle.board[x][y] != "B":
-                    self.board.create_text(center[0], center[1], text = self.puzzle.board[x][y])
-                
+                    self.board.create_text(center[0], center[1], text = self.puzzle.board[x][y], font = ('Times', 13, 'bold'))
 
     def _get_coords(self):
         self.list_coord = [[] for i in range(self.size)]
@@ -42,12 +42,41 @@ class Game:
             self.board.create_line(0.0, row * self.side/self.size, self.side, row * self.side/self.size, fill = "Black")
             self.board.create_line(row * self.side/self.size, 0.0, row * self.side/self.size, self.side, fill = "Black")
 
+    def _get_move(self):
+        self.root_window.bind("<Left>", self._left)
+        self.root_window.bind("<Right>", self._right)
+        self.root_window.bind("<Down>", self._down)
+        self.root_window.bind("<Up>", self._up)
+        self.root_window.focus()
+
+    def _left(self, event):
+        self.puzzle.update_board("a")
+        self.board.delete(tkinter.ALL)
+        self.display_board()
+
+    def _right(self, event):
+        self.puzzle.update_board("d")
+        self.board.delete(tkinter.ALL)
+        self.display_board()
+        
+    def _down(self, event):
+        self.puzzle.update_board("s")
+        self.board.delete(tkinter.ALL)
+        self.display_board()
+
+    def _up(self, event):
+        self.puzzle.update_board("w")
+        self.board.delete(tkinter.ALL)
+        self.display_board()
+        
     def _add_timer_label(self):
         self.timer_label = tkinter.Label(self.root_window, text = "Timer: " + str(self.time))
         self.timer_label.grid(row = 0, column = 0, sticky = tkinter.W + tkinter.N)
 
     def scramble(self):
         self.puzzle.scramble()
+        self.board.delete(tkinter.ALL)
+        self.display_board()
 
     def _add_scramble_button(self):
         self.scramble_button = tkinter.Button(self.root_window, text = "Scramble", command = self.scramble)
