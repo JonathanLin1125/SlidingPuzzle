@@ -7,14 +7,16 @@ class Puzzle:
         self.size = size
         self.board = start_board
         if self.board == []:
-            self.create_default()
+            self.board = self.create_default()
         self.blank_cord = self.find_blank()
 
     def create_default(self):
+        board = []
         for mult in range(1, self.size + 1):
-            self.board.append([num for num in range((mult - 1) * self.size + 1, mult * self.size + 1)])
-        del self.board[self.size - 1][self.size - 1]
-        self.board[self.size - 1].append("B")
+            board.append([num for num in range((mult - 1) * self.size + 1, mult * self.size + 1)])
+        del board[self.size - 1][self.size - 1]
+        board[self.size - 1].append("B")
+        return board
 
     def update_board(self, key):
         if key == "w":
@@ -44,13 +46,16 @@ class Puzzle:
                 if col == "B":
                     return (self.board.index(row), row.index(col))
 
+    def reset(self):
+        self.board = self.create_default()
+        self.blank_cord = self.find_blank()
+
     def scramble(self):
         random.shuffle(self.board)
         for i in range(len(self.board)):
             random.shuffle(self.board[i])
         self.blank_cord = self.find_blank()
         self._get_inversion_count()
-        
         if self._check_solvable() == False:
             self.scramble()
 
