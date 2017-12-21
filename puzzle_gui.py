@@ -123,7 +123,7 @@ class Game:
         self.scramble_button.grid(row = 0, column = 2, sticky = tkinter.E + tkinter.N)
 
     def reset(self):
-        self.puzzle.board = self.default.copy()
+        self.puzzle.reset()
         self.board.delete(tkinter.ALL)
         self._draw_grid()
         self._label_board()
